@@ -1,7 +1,6 @@
 class Dashboard {
-
   constructor() {
-    this.activePage = '';
+    this.activePage = "";
     this.links = [];
   }
 
@@ -27,13 +26,9 @@ class Dashboard {
     // Begin Swagger UI call region
     const ui = SwaggerUIBundle({
       url: url,
-      dom_id: '#mainContent',
-      presets: [
-        SwaggerUIBundle.presets.apis
-      ],
-      plugins: [
-        SwaggerUIBundle.plugins.DownloadUrl
-      ],
+      dom_id: "#mainContent",
+      presets: [SwaggerUIBundle.presets.apis],
+      plugins: [SwaggerUIBundle.plugins.DownloadUrl],
       layout: "BaseLayout"
     });
     // End Swagger UI call region
@@ -58,8 +53,7 @@ class Dashboard {
       let mainContent = document.getElementById("mainContent");
       mainContent.innerHTML = await this.getContent(page);
       return Promise.resolve();
-    }
-    catch (e) {
+    } catch (e) {
       return Promise.reject(e);
     }
   }
@@ -80,20 +74,43 @@ class Dashboard {
       };
     }
 
-    let swaggerLinks = document.getElementsByClassName("swagger-link");
-    for (let item of swaggerLinks) {
-      let page = item.getAttribute("target");
-      dashboard.links.push(item);
-      item.onclick = function (e) {
+    const menuContent = await dashboard.getContent("./apis/menu.json");
+    const menu = JSON.parse(menuContent);
+    const sidebarMenuUL = document.getElementById("sidebarMenuUL");
+
+    for (let item of menu.items) {
+      let li = document.createElement("li");
+      li.classList.add("nav-item");
+      let target = `./apis/${item.target}?${item.version}`;
+      let a = document.createElement("a");
+      a.classList.add("nav-link");
+      a.setAttribute("aria-current", "page");
+      a.setAttribute("target", target);
+      a.setAttribute("href", "#");
+      a.onclick = function (e) {
         e.preventDefault();
-        dashboard.showSwaggerPage(page);
+        dashboard.showSwaggerPage(target);
         dashboard.showActiveLink();
       };
+      a.innerHTML = `<span data-feather="home"></span>${item.name}`;
+      li.append(a);
+      sidebarMenuUL.append(li);
+      dashboard.links.push(a);
     }
 
+    // let swaggerLinks = document.getElementsByClassName("swagger-link");
+    // for (let item of swaggerLinks) {
+    //   let page = item.getAttribute("target");
+    //   dashboard.links.push(item);
+    //   item.onclick = function (e) {
+    //     e.preventDefault();
+    //     dashboard.showSwaggerPage(page);
+    //     dashboard.showActiveLink();
+    //   };
+    // }
+
     dashboard.showCustomPage("welcome.html");
-  }
-  catch (e) {
+  } catch (e) {
     console.error(e);
   }
 })();
