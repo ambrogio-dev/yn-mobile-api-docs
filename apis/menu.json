@@ -4,6 +4,11 @@
       "name": "Authentication",
       "target": "Auth.json",
       "version": "1_0_1"
+    },
+    {
+      "name": "Filebox",
+      "target": "Filebox.json",
+      "version": "1_0_0"
     }
   ]
 }
