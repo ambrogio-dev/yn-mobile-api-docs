@@ -32,71 +32,74 @@
           "200": {
             "description": "OK",
             "schema": {
-              "type": "object",
-              "required": [
-                "id",
-                "name",
-                "isDirectory",
-                "creationDate",
-                "creator",
-                "lastUpdate"
-              ],
-              "properties": {
-                "id": {
-                  "description": "Item Id",
-                  "type": "integer"
-                },
-                "name": {
-                  "description": "Logical item's name",
-                  "type": "string"
-                },
-                "stored": {
-                  "description": "Phisical file's name (null if it's a direcotry)",
-                  "type": "string"
-                },
-                "isDirectory": {
-                  "description": "True if item is a directory, false if it's a file",
-                  "type": "boolean"
-                },
-                "size": {
-                  "description": "File's size (null if it's a direcotry)",
-                  "type": "integer"
-                },
-                "mime": {
-                  "description": "File's mimetype (null if it's a direcotry)",
-                  "type": "string"
-                },
-                "creationDate": {
-                  "description": "Item's creation date",
-                  "type": "integer"
-                },
-                "creator": {
-                  "description": "User (id) who created the file/directory",
-                  "type": "integer"
-                },
-                "lastUpdate": {
-                  "description": "Item's last updating date",
-                  "type": "integer"
-                },
-                "lastUpdater": {
-                  "description": "User (id) who updated the file/directory last time",
-                  "type": "integer"
-                },
-                "parent": {
-                  "description": "Item's parent Id",
-                  "type": "integer"
-                },
-                "blockingUser": {
-                  "description": "User (id) who blocked the file in order to deny changes",
-                  "type": "integer"
-                },
-                "publicUrl": {
-                  "description": "Public download url (null if it's a direcotry or not public)",
-                  "type": "string"
-                },
-                "isShared": {
-                  "description": "True if the item is shared",
-                  "type": "boolean"
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "isDirectory",
+                  "creationDate",
+                  "creator",
+                  "lastUpdate"
+                ],
+                "properties": {
+                  "id": {
+                    "description": "Item Id",
+                    "type": "integer"
+                  },
+                  "name": {
+                    "description": "Logical item's name",
+                    "type": "string"
+                  },
+                  "stored": {
+                    "description": "Phisical file's name (null if it's a direcotry)",
+                    "type": "string"
+                  },
+                  "isDirectory": {
+                    "description": "True if item is a directory, false if it's a file",
+                    "type": "boolean"
+                  },
+                  "size": {
+                    "description": "File's size (null if it's a direcotry)",
+                    "type": "integer"
+                  },
+                  "mime": {
+                    "description": "File's mimetype (null if it's a direcotry)",
+                    "type": "string"
+                  },
+                  "creationDate": {
+                    "description": "Item's creation date",
+                    "type": "integer"
+                  },
+                  "creator": {
+                    "description": "User (id) who created the file/directory",
+                    "type": "integer"
+                  },
+                  "lastUpdate": {
+                    "description": "Item's last updating date",
+                    "type": "integer"
+                  },
+                  "lastUpdater": {
+                    "description": "User (id) who updated the file/directory last time",
+                    "type": "integer"
+                  },
+                  "parent": {
+                    "description": "Item's parent Id",
+                    "type": "integer"
+                  },
+                  "blockingUser": {
+                    "description": "User (id) who blocked the file in order to deny changes",
+                    "type": "integer"
+                  },
+                  "publicUrl": {
+                    "description": "Public download url (null if it's a direcotry or not public)",
+                    "type": "string"
+                  },
+                  "isShared": {
+                    "description": "True if the item is shared",
+                    "type": "boolean"
+                  }
                 }
               }
             }
