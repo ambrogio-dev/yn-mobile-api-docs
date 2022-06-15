@@ -1,0 +1,83 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Me",
+    "description": "<p>Description TODO</p>"
+  },
+  "host": "alpha.youneed.it/mobile",
+  "basePath": "/v2",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/me": {
+      "get": {
+        "description": "<p>Get authenticated-user's profile details.</p>",
+        "parameters": [
+          {
+            "in": "headers",
+            "name": "Authorization",
+            "type": "string",
+            "description": "The access token in the format: <b>Bearer [token]</b>",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "customer_id",
+                "username",
+                "surname",
+                "grants"
+              ],
+              "properties": {
+                "id": {
+                  "description": "User Id",
+                  "type": "integer",
+                  "example": 1
+                },
+                "customer_id": {
+                  "description": "Customer Id",
+                  "type": "integer",
+                  "example": 1
+                },
+                "username": {
+                  "description": "User's username",
+                  "type": "string",
+                  "example": "m.rossi"
+                },
+                "name": {
+                  "description": "User's name",
+                  "type": "string",
+                  "example": "Mario"
+                },
+                "surname": {
+                  "description": "User's surname",
+                  "type": "string",
+                  "example": "Rossi"
+                },
+                "email": {
+                  "description": "User's surname",
+                  "type": "string",
+                  "example": "m.rossi@email.com"
+                },
+                "grants": {
+                  "description": "User's surname",
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "example": "MANAGE_PRESENCES"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

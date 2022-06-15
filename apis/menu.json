@@ -9,6 +9,11 @@
       "name": "Filebox",
       "target": "Filebox.json",
       "version": "1_0_3"
+    },
+    {
+      "name": "Me",
+      "target": "Me.json",
+      "version": "1_0_0"
     }
   ]
 }
