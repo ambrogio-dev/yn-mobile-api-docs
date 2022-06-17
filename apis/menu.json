@@ -14,6 +14,11 @@
       "name": "Me",
       "target": "Me.json",
       "version": "1_0_0"
+    },
+    {
+      "name": "Timecards",
+      "target": "Timecards.json",
+      "version": "1_0_3"
     }
   ]
 }
