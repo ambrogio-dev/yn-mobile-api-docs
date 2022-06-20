@@ -63,7 +63,7 @@
                   "propeties": {
                     "date": {
                       "description": "The timecard unix timestamp (milliseconds)",
-                      "type": "integer",
+                      "type": "number",
                       "example": 1655460944344
                     }
                   }
