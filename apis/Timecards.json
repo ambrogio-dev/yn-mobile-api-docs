@@ -83,22 +83,17 @@
                 "realtime_inserted": {
                   "type": "object",
                   "properties": {
-                    "geolocation": {
-                      "type": "object",
-                      "properties": {
-                        "latitude": {
-                          "type": "mumber",
-                          "example": 43.88425,
-                          "minimum": -90,
-                          "maximum": 90
-                        },
-                        "longitude": {
-                          "type": "mumber",
-                          "example": 11.09092,
-                          "minimum": -180,
-                          "maximum": 180
-                        }
-                      }
+                    "latitude": {
+                      "type": "mumber",
+                      "example": 43.88425,
+                      "minimum": -90,
+                      "maximum": 90
+                    },
+                    "longitude": {
+                      "type": "mumber",
+                      "example": 11.09092,
+                      "minimum": -180,
+                      "maximum": 180
                     }
                   }
                 }
