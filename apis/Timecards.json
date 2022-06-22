@@ -85,9 +85,7 @@
                   "properties": {
                     "date": {
                       "type": "mumber",
-                      "example": 43.88425,
-                      "minimum": -90,
-                      "maximum": 90
+                      "example": 1655460944344
                     }
                   }
                 }
