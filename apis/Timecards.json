@@ -58,7 +58,7 @@
                   "type": "boolean",
                   "example": false
                 },
-                "manually_inserted": {
+                "realtime_inserted": {
                   "type": "object",
                   "properties": {
                     "geolocation": {
@@ -80,7 +80,7 @@
                     }
                   }
                 },
-                "realtime_inserted": {
+                "manually_inserted": {
                   "type": "object",
                   "properties": {
                     "date": {
