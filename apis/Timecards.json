@@ -29,7 +29,7 @@
                 "is_in",
                 "is_break",
                 "canteen_service_requested",
-                "on_call_service"
+                "is_on_call"
               ],
               "description": "manually_inserted and realtime_inserted are mutually exclusive",
               "properties": {
@@ -340,6 +340,91 @@
           }
         }
       }
-    }
+    },
+    "/timecard/entries/{id}": {
+      "patch": {
+        "description": "<p>Update a timecard</p>",
+        "parameters": [
+          {
+            "in": "headers",
+            "name": "Authorization",
+            "type": "string",
+            "description": "The access token in the format: <b>Bearer [token]</b>",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the timecard",
+            "required": true,
+            "type": "integer",
+            "example": 123
+          },
+          {
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "date",
+                "is_in",
+                "is_break",
+                "canteen_service_requested",
+                "is_on_call"
+              ],
+              "description": "manually_inserted and realtime_inserted are mutually exclusive",
+              "properties": {
+                "notes": {
+                  "description": "Notes",
+                  "type": "string",
+                  "example": "This is a note"
+                },
+                "date": {
+                  "description": "Timecsart timestamp",
+                  "type": "number",
+                  "example": "This is a note"
+                },
+                "is_in": {
+                  "description": "The timecard represents an entrance",
+                  "type": "boolean",
+                  "example": true
+                },
+                "is_break": {
+                  "description": "The timecard is relative to a breack",
+                  "type": "boolean",
+                  "example": false
+                },
+                "canteen_service_requested": {
+                  "description": "The canteen service is requested",
+                  "type": "boolean",
+                  "example": false
+                },
+                "is_on_call": {
+                  "description": "Whether or not the employee is on an \"on call\" shift",
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden: user exists but is blocked"
+          },
+          "401": {
+            "description": "Unauthorized: user doesn't exists or is not authenticated"
+          },
+          "404": {
+            "description": "The timecard does not exists or is not owneed by user"
+          },
+          "400": {
+            "description": "Bad Request: one of required params is not provided or not valid."
+          }
+        }
+      }
+    },
   }
 }
