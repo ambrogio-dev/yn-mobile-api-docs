@@ -60,11 +60,23 @@
                 },
                 "manually_inserted": {
                   "type": "object",
-                  "propeties": {
-                    "date": {
-                      "description": "The timecard unix timestamp (milliseconds)",
-                      "type": "number",
-                      "example": 1655460944344
+                  "properties": {
+                    "geolocation": {
+                      "type": "object",
+                      "properties": {
+                        "latitude": {
+                          "type": "mumber",
+                          "example": 43.88425,
+                          "minimum": -90,
+                          "maximum": 90
+                        },
+                        "longitude": {
+                          "type": "mumber",
+                          "example": 11.09092,
+                          "minimum": -180,
+                          "maximum": 180
+                        }
+                      }
                     }
                   }
                 },
