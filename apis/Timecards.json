@@ -274,7 +274,7 @@
                 "date": {
                   "description": "Timecsart timestamp",
                   "type": "number",
-                  "example": "This is a note"
+                  "example": 1655460944344
                 },
                 "is_in": {
                   "description": "The timecard represents an entrance",
