@@ -120,6 +120,139 @@
             "description": "Bad Request: one of required params is not provided or not valid."
           }
         }
+      },
+      "get": {
+        "description": "<p>Get timecards history</p>",
+        "parameters": [
+          {
+            "in": "headers",
+            "name": "Authorization",
+            "type": "string",
+            "description": "The access token in the format: <b>Bearer [token]</b>",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "is_in",
+                  "is_break",
+                  "is_validated",
+                  "is_confirmed",
+                  "canteen_service_requested",
+                  "is_on_call",
+                  "date"
+                ],
+                "properties": {
+                  "id": {
+                    "description": "Timecard Id",
+                    "type": "integer",
+                    "example": 123
+                  },
+                  "notes": {
+                    "description": "Notes",
+                    "type": "string",
+                    "example": "This is a note"
+                  },
+                  "is_in": {
+                    "description": "The timecard represents an entrance",
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "is_break": {
+                    "description": "The timecard is relative to a breack",
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "is_validated": {
+                    "description": "The timecard is validated",
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "is_confirmed": {
+                    "description": "The timecard is confirmed",
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "canteen_service_requested": {
+                    "description": "The canteen service is requested",
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "is_on_call": {
+                    "description": "Whether or not the employee is on an \"on call\" shift",
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "date": {
+                    "description": "The timecard unix timestamp (milliseconds)",
+                    "type": "number",
+                    "example": 1655460944344
+                  },
+                  "geolocation": {
+                    "type": "object",
+                    "properties": {
+                      "latitude": {
+                        "type": "mumber",
+                        "example": 43.88425,
+                        "minimum": -90,
+                        "maximum": 90
+                      },
+                      "longitude": {
+                        "type": "mumber",
+                        "example": 11.09092,
+                        "minimum": -180,
+                        "maximum": 180
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "The API returns an empty list"
+          },
+          "403": {
+            "description": "Forbidden: user exists but is blocked"
+          },
+          "401": {
+            "description": "Unauthorized: user doesn't exists or is not authenticated"
+          },
+          "400": {
+            "description": "Bad Request: one of required params is not provided or not valid."
+          }
+        }
       }
     },
     "/timecard/entries/{id}": {
