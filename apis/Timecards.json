@@ -42,7 +42,7 @@
                 },
                 "justification_id": {
                   "description": "The timecard justification",
-                  "type": "boolean",
+                  "type": "number",
                   "example": 1,
                   "enum": [
                     1,
@@ -159,11 +159,8 @@
                 "required": [
                   "id",
                   "is_in",
-                  "is_break",
                   "is_validated",
-                  "is_confirmed",
-                  "canteen_service_requested",
-                  "is_on_call",
+                  "is_confirmed",                  
                   "date"
                 ],
                 "properties": {
@@ -182,11 +179,6 @@
                     "type": "boolean",
                     "example": true
                   },
-                  "is_break": {
-                    "description": "The timecard is relative to a breack",
-                    "type": "boolean",
-                    "example": false
-                  },
                   "is_validated": {
                     "description": "The timecard is validated",
                     "type": "boolean",
@@ -197,15 +189,16 @@
                     "type": "boolean",
                     "example": true
                   },
-                  "canteen_service_requested": {
-                    "description": "The canteen service is requested",
-                    "type": "boolean",
-                    "example": false
-                  },
-                  "is_on_call": {
-                    "description": "Whether or not the employee is on an \"on call\" shift",
-                    "type": "boolean",
-                    "example": false
+                  "justification_id": {
+                    "description": "The timecard justification",
+                    "type": "number",
+                    "example": 1,
+                    "enum": [
+                      1,
+                      2,
+                      3,
+                      4
+                    ]
                   },
                   "date": {
                     "description": "The timecard unix timestamp (milliseconds)",
@@ -276,11 +269,8 @@
               "required": [
                 "id",
                 "is_in",
-                "is_break",
                 "is_validated",
                 "is_confirmed",
-                "canteen_service_requested",
-                "is_on_call",
                 "date"
               ],
               "properties": {
@@ -299,11 +289,6 @@
                   "type": "boolean",
                   "example": true
                 },
-                "is_break": {
-                  "description": "The timecard is relative to a breack",
-                  "type": "boolean",
-                  "example": false
-                },
                 "is_validated": {
                   "description": "The timecard is validated",
                   "type": "boolean",
@@ -314,15 +299,16 @@
                   "type": "boolean",
                   "example": true
                 },
-                "canteen_service_requested": {
-                  "description": "The canteen service is requested",
-                  "type": "boolean",
-                  "example": false
-                },
-                "is_on_call": {
-                  "description": "Whether or not the employee is on an \"on call\" shift",
-                  "type": "boolean",
-                  "example": false
+                "justification_id": {
+                  "description": "The timecard justification",
+                  "type": "number",
+                  "example": 1,
+                  "enum": [
+                    1,
+                    2,
+                    3,
+                    4
+                  ]
                 },
                 "date": {
                   "description": "The timecard unix timestamp (milliseconds)",
@@ -384,10 +370,7 @@
               "type": "object",
               "required": [
                 "date",
-                "is_in",
-                "is_break",
-                "canteen_service_requested",
-                "is_on_call"
+                "is_in"
               ],
               "description": "manually_inserted and realtime_inserted are mutually exclusive",
               "properties": {
@@ -406,20 +389,16 @@
                   "type": "boolean",
                   "example": true
                 },
-                "is_break": {
-                  "description": "The timecard is relative to a breack",
-                  "type": "boolean",
-                  "example": false
-                },
-                "canteen_service_requested": {
-                  "description": "The canteen service is requested",
-                  "type": "boolean",
-                  "example": false
-                },
-                "is_on_call": {
-                  "description": "Whether or not the employee is on an \"on call\" shift",
-                  "type": "boolean",
-                  "example": false
+                "justification_id": {
+                  "description": "The timecard justification",
+                  "type": "number",
+                  "example": 1,
+                  "enum": [
+                    1,
+                    2,
+                    3,
+                    4
+                  ]
                 }
               }
             }
@@ -464,11 +443,8 @@
               "required": [
                 "id",
                 "is_in",
-                "is_break",
                 "is_validated",
                 "is_confirmed",
-                "canteen_service_requested",
-                "is_on_call",
                 "date"
               ],
               "properties": {
@@ -487,11 +463,6 @@
                   "type": "boolean",
                   "example": true
                 },
-                "is_break": {
-                  "description": "The timecard is relative to a breack",
-                  "type": "boolean",
-                  "example": false
-                },
                 "is_validated": {
                   "description": "The timecard is validated",
                   "type": "boolean",
@@ -502,15 +473,16 @@
                   "type": "boolean",
                   "example": true
                 },
-                "canteen_service_requested": {
-                  "description": "The canteen service is requested",
-                  "type": "boolean",
-                  "example": false
-                },
-                "is_on_call": {
-                  "description": "Whether or not the employee is on an \"on call\" shift",
-                  "type": "boolean",
-                  "example": false
+                "justification_id": {
+                  "description": "The timecard justification",
+                  "type": "number",
+                  "example": 1,
+                  "enum": [
+                    1,
+                    2,
+                    3,
+                    4
+                  ]
                 },
                 "date": {
                   "description": "The timecard unix timestamp (milliseconds)",
