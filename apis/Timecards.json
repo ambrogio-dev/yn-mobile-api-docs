@@ -26,10 +26,7 @@
             "schema": {
               "type": "object",
               "required": [
-                "is_in",
-                "is_break",
-                "canteen_service_requested",
-                "is_on_call"
+                "is_in"
               ],
               "description": "manually_inserted and realtime_inserted are mutually exclusive",
               "properties": {
@@ -43,20 +40,16 @@
                   "type": "boolean",
                   "example": true
                 },
-                "is_break": {
-                  "description": "The timecard is relative to a breack",
+                "justification_id": {
+                  "description": "The timecard justification",
                   "type": "boolean",
-                  "example": false
-                },
-                "canteen_service_requested": {
-                  "description": "The canteen service is requested",
-                  "type": "boolean",
-                  "example": false
-                },
-                "is_on_call": {
-                  "description": "Whether or not the employee is on an \"on call\" shift",
-                  "type": "boolean",
-                  "example": false
+                  "example": 1,
+                  "enum": [
+                    1,
+                    2,
+                    3,
+                    4
+                  ]
                 },
                 "realtime_inserted": {
                   "type": "object",
