@@ -17,8 +17,8 @@
     },
     {
       "name": "Timecard",
-      "target": "Timecards.json",
-      "version": "1_0_1"
+      "target": "Timecard.json",
+      "version": "1_0_0"
     }
   ]
 }
