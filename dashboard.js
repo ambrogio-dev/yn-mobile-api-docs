@@ -74,7 +74,7 @@ class Dashboard {
       };
     }
 
-    const menuContent = await dashboard.getContent("./apis/menu.json?v=1_1_0");
+    const menuContent = await dashboard.getContent("./apis/menu.json?v=1_0_1");
     const menu = JSON.parse(menuContent);
     const sidebarMenuUL = document.getElementById("sidebarMenuUL");
 
@@ -109,7 +109,7 @@ class Dashboard {
     //   };
     // }
 
-    dashboard.showCustomPage("welcome.html");
+    dashboard.showCustomPage("welcome.html?v=1_0_0");
   } catch (e) {
     console.error(e);
   }
