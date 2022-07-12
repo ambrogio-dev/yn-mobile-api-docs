@@ -10,6 +10,79 @@
     "https"
   ],
   "paths": {
+    "/timecard/settings": {
+      "get": {
+        "description": "<p>Get settings</p>",
+        "parameters": [
+          {
+            "in": "headers",
+            "name": "Authorization",
+            "type": "string",
+            "description": "The access token in the format: <b>Bearer [token]</b>",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "required": [
+                "justifications"
+              ],
+              "properties": {
+                "justifications": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "direction",
+                      "localization"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "description": "Justification id",
+                        "example": 1
+                      },
+                      "direction": {
+                        "type": "string",
+                        "description": "Directions in which the justification is available",
+                        "example": "out",
+                        "enum": [
+                          "in",
+                          "out",
+                          "both"
+                        ]
+                      },
+                      "localization": {
+                        "type": "array",
+                        "description": "Justification name in all languages supported",
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        },
+                        "example": [
+                          {
+                            "it": "ciao"
+                          },
+                          {
+                            "en": "hi"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/timecard/entries": {
       "post": {
         "description": "<p>Add a timecard</p>",
@@ -160,7 +233,7 @@
                   "id",
                   "is_in",
                   "is_validated",
-                  "is_confirmed",                  
+                  "is_confirmed",
                   "date"
                 ],
                 "properties": {
