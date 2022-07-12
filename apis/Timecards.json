@@ -58,7 +58,7 @@
                       },
                       "localization": {
                         "type": "array",
-                        "description": "Justification name in all languages supported",
+                        "description": "Localized names (in all the available languages) for the justification name.",
                         "items": {
                           "type": "object",
                           "additionalProperties": {
@@ -109,12 +109,12 @@
                   "example": "This is a note"
                 },
                 "is_in": {
-                  "description": "The timecard represents an entrance",
+                  "description": "Whether or not the time entry represents an entrance.",
                   "type": "boolean",
                   "example": true
                 },
                 "justification_id": {
-                  "description": "The timecard justification",
+                  "description": "The time entry justification kind (if any).",
                   "type": "number",
                   "example": 1,
                   "enum": [
@@ -169,7 +169,7 @@
               ],
               "properties": {
                 "id": {
-                  "description": "Inserted timecard Id",
+                  "description": "Inserted time entry Id",
                   "type": "integer",
                   "example": 1
                 }
@@ -238,7 +238,7 @@
                 ],
                 "properties": {
                   "id": {
-                    "description": "Timecard Id",
+                    "description": "The time entry Id",
                     "type": "integer",
                     "example": 123
                   },
@@ -248,22 +248,22 @@
                     "example": "This is a note"
                   },
                   "is_in": {
-                    "description": "The timecard represents an entrance",
+                    "description": "Whether or not the time entry represents an entrance.",
                     "type": "boolean",
                     "example": true
                   },
                   "is_validated": {
-                    "description": "The timecard is validated",
+                    "description": "The time entry is validated",
                     "type": "boolean",
                     "example": true
                   },
                   "is_confirmed": {
-                    "description": "The timecard is confirmed",
+                    "description": "The time entry is confirmed",
                     "type": "boolean",
                     "example": true
                   },
                   "justification_id": {
-                    "description": "The timecard justification",
+                    "description": "The time entry justification",
                     "type": "number",
                     "example": 1,
                     "enum": [
@@ -274,7 +274,7 @@
                     ]
                   },
                   "date": {
-                    "description": "The timecard unix timestamp (milliseconds)",
+                    "description": "The time entry unix timestamp (milliseconds)",
                     "type": "number",
                     "example": 1655460944344
                   },
@@ -328,7 +328,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the timecard",
+            "description": "The time entry Id.",
             "required": true,
             "type": "integer",
             "example": 123
@@ -348,7 +348,7 @@
               ],
               "properties": {
                 "id": {
-                  "description": "Timecard Id",
+                  "description": "The time entry Id",
                   "type": "integer",
                   "example": 123
                 },
@@ -358,22 +358,22 @@
                   "example": "This is a note"
                 },
                 "is_in": {
-                  "description": "The timecard represents an entrance",
+                  "description": "Whether or not the time entry represents an entrance.",
                   "type": "boolean",
                   "example": true
                 },
                 "is_validated": {
-                  "description": "The timecard is validated",
+                  "description": "The time entry is validated",
                   "type": "boolean",
                   "example": true
                 },
                 "is_confirmed": {
-                  "description": "The timecard is confirmed",
+                  "description": "The time entry is confirmed",
                   "type": "boolean",
                   "example": true
                 },
                 "justification_id": {
-                  "description": "The timecard justification",
+                  "description": "The time entry justification",
                   "type": "number",
                   "example": 1,
                   "enum": [
@@ -384,7 +384,7 @@
                   ]
                 },
                 "date": {
-                  "description": "The timecard unix timestamp (milliseconds)",
+                  "description": "The time entry unix timestamp (milliseconds)",
                   "type": "number",
                   "example": 1655460944344
                 },
@@ -409,13 +409,13 @@
             }
           },
           "403": {
-            "description": "Forbidden: user exists but is blocked, or user is not authorized to see the timecard"
+            "description": "Forbidden: user exists but is blocked, or user is not authorized to access this API"
           },
           "401": {
             "description": "Unauthorized: user doesn't exists or is not authenticated"
           },
           "404": {
-            "description": "The timecard does not exists"
+            "description": "The time entry does not exists"
           }
         }
       },
@@ -432,7 +432,7 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The id of the timecard",
+            "description": "Time entry Id.",
             "required": true,
             "type": "integer",
             "example": 123
@@ -458,12 +458,12 @@
                   "example": 1655460944344
                 },
                 "is_in": {
-                  "description": "The timecard represents an entrance",
+                  "description": "Whether or not the time entry represents an entrance.",
                   "type": "boolean",
                   "example": true
                 },
                 "justification_id": {
-                  "description": "The timecard justification",
+                  "description": "The time entry justification kind (if any).",
                   "type": "number",
                   "example": 1,
                   "enum": [
@@ -522,7 +522,7 @@
               ],
               "properties": {
                 "id": {
-                  "description": "Timecard Id",
+                  "description": "The time entry Id",
                   "type": "integer",
                   "example": 123
                 },
@@ -532,22 +532,22 @@
                   "example": "This is a note"
                 },
                 "is_in": {
-                  "description": "The timecard represents an entrance",
+                  "description": "Whether or not the time entry represents an entrance.",
                   "type": "boolean",
                   "example": true
                 },
                 "is_validated": {
-                  "description": "The timecard is validated",
+                  "description": "The time entry is validated",
                   "type": "boolean",
                   "example": true
                 },
                 "is_confirmed": {
-                  "description": "The timecard is confirmed",
+                  "description": "The time entry is confirmed",
                   "type": "boolean",
                   "example": true
                 },
                 "justification_id": {
-                  "description": "The timecard justification",
+                  "description": "The time entry justification",
                   "type": "number",
                   "example": 1,
                   "enum": [
@@ -558,7 +558,7 @@
                   ]
                 },
                 "date": {
-                  "description": "The timecard unix timestamp (milliseconds)",
+                  "description": "The time entry unix timestamp (milliseconds)",
                   "type": "number",
                   "example": 1655460944344
                 },
