@@ -12,7 +12,7 @@
   "paths": {
     "/timecard/entries": {
       "post": {
-        "description": "<p>Add a timecard</p>",
+        "description": "<p>Add a new time entry (in or out)./p>",
         "parameters": [
           {
             "in": "headers",
@@ -115,7 +115,7 @@
         }
       },
       "get": {
-        "description": "<p>Get timecards history</p>",
+        "description": "<p>Get all the time entries.</p>",
         "parameters": [
           {
             "in": "headers",
@@ -243,7 +243,7 @@
     },
     "/timecard/entries/{id}": {
       "get": {
-        "description": "<p>Get timecard details</p>",
+        "description": "<p>Get a time entry detail.</p>",
         "parameters": [
           {
             "in": "headers",
@@ -347,7 +347,7 @@
         }
       },
       "patch": {
-        "description": "<p>Update a timecard</p>",
+        "description": "<p>Update a time entry.</p>",
         "parameters": [
           {
             "in": "headers",
@@ -425,7 +425,7 @@
     },
     "/timecard/entries/last": {
       "get": {
-        "description": "<p>Get last timecard</p>",
+        "description": "<p>Get the last time entry.</p>",
         "parameters": [
           {
             "in": "headers",
