@@ -488,7 +488,7 @@
             "description": "Unauthorized: user doesn't exists or is not authenticated"
           },
           "404": {
-            "description": "The timecard does not exists or is not owneed by user"
+            "description": "The time entry doesn't exist or it it has been done by a different user."
           },
           "400": {
             "description": "Bad Request: one of required params is not provided or not valid."
@@ -589,7 +589,7 @@
             "description": "Unauthorized: user doesn't exists or is not authenticated"
           },
           "404": {
-            "description": "The user has not timecards"
+            "description": "The user has not time entries yet."
           }
         }
       }
