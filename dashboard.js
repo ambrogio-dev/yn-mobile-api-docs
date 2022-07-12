@@ -74,7 +74,7 @@ class Dashboard {
       };
     }
 
-    const menuContent = await dashboard.getContent("./apis/menu.json?v=1_0_1");
+    const menuContent = await dashboard.getContent("./apis/menu.json?v=1_0_2");
     const menu = JSON.parse(menuContent);
     const sidebarMenuUL = document.getElementById("sidebarMenuUL");
 
