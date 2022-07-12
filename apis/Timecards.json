@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Timecards",
+    "title": "Timecard",
     "description": "<p>Description TODO</p>"
   },
   "host": "alpha.youneed.it/mobile",
@@ -188,7 +188,7 @@
         }
       },
       "get": {
-        "description": "<p>Get all the time entries.</p>",
+        "description": "<p>Get all the time entries for the authenticated user.</p>",
         "parameters": [
           {
             "in": "headers",
