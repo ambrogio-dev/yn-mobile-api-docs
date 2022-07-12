@@ -3,22 +3,22 @@
     {
       "name": "Authentication",
       "target": "Auth.json",
-      "version": "1.0.0"
+      "version": "1_0_0"
     },
     {
       "name": "Filebox",
       "target": "Filebox.json",
-      "version": "1.0.0"
+      "version": "1_0_0"
     },
     {
       "name": "Me",
       "target": "Me.json",
-      "version": "1.0.0"
+      "version": "1_0_0"
     },
     {
       "name": "Timecards",
       "target": "Timecards.json",
-      "version": "1.0.1"
+      "version": "1_0_0"
     }
   ]
 }
