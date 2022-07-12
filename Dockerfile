@@ -14,5 +14,5 @@ ENTRYPOINT ["nginx", "-g", "daemon off;"]
 # Get into a Docker container's shell
 # docker exec -it container_name sh  
 
-# Build and run a container where the project *app* folder is mounted to the container *app* folder.
+# Build and run a container where the project main folder is mounted to the container */usr/share/nginx/html* folder.
 # docker run --rm -v $(pwd)/:/usr/share/nginx/html -it -p 80:80 api-docs
