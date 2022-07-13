@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Filebox",
-    "description": "<p>Description TODO</p>"
+    "description": "<p>Filebox APIs (Work in progress).</p>"
   },
   "host": "alpha.youneed.it/mobile",
   "basePath": "/v2",

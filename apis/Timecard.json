@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Timecard",
-    "description": "<p>Description TODO</p>"
+    "description": "<p>Time tracking APIs.</p>"
   },
   "host": "alpha.youneed.it/mobile",
   "basePath": "/v2",
