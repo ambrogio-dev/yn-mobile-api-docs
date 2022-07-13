@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Timecard",
-    "description": "<p>Time tracking APIs.</p>"
+    "description": "<p>Timecard APIs provides a way to record, edit or review working times.</p>"
   },
   "host": "alpha.youneed.it/mobile",
   "basePath": "/v2",
