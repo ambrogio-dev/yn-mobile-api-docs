@@ -4,24 +4,24 @@
     "title": "User",
     "description": "<p>User APIs provides a way to work with an authenticated user data.</p>"
   },
-  "host": "alpha.youneed.it/mobile",
+  "host": "alpha.web.youneed.it/mobile/api",
   "basePath": "/v2",
   "schemes": [
     "https"
   ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter your bearer token in the format **Bearer &lt;token>**"
+    }
+  },
   "paths": {
-    "/me": {
+    "/user/me": {
       "get": {
         "description": "<p>Get authenticated-user's profile details.</p>",
-        "parameters": [
-          {
-            "in": "headers",
-            "name": "Authorization",
-            "type": "string",
-            "description": "The access token in the format: <b>Bearer [token]</b>",
-            "required": true
-          }
-        ],
+        "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
             "description": "OK",
