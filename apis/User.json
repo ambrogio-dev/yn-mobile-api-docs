@@ -23,6 +23,9 @@
         "description": "<p>Get authenticated-user's profile details.</p>",
         "security": [{ "Bearer": [] }],
         "responses": {
+          "401": {
+            "description": "Unauthorized."
+          },
           "200": {
             "description": "OK",
             "schema": {
