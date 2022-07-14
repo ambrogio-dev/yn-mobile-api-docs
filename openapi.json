@@ -1,0 +1,324 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "YouNeed Mobile API v2",
+    "description": "The YouNeed API enables programmatic access to YouNeed in unique and advanced ways.",
+    "contact": {
+      "email": "se@ambrogio.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://alpha.web.youneed.it/mobile/api/v2"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Authentication API"
+    },
+    {
+      "name": "User",
+      "description": "Authenticaed user API"
+    }
+  ],
+  "paths": {
+    "/auth/Login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login",
+        "description": "Logs in a user.",
+        "requestBody": {
+          "description": "Credentials",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Credentials"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tokens"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout",
+        "description": "Logs out the current authenticated user.",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RefreshTokenBody"
+        },
+        "responses": {
+          "200": {
+            "description": "User logged out."
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Refresh",
+        "description": "Refresh the API access token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RefreshTokenBody"
+        },
+        "responses": {
+          "200": {
+            "description": "Tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessToken"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/user/me": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Me",
+        "description": "User profile",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfile"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "requestBodies": {
+      "RefreshTokenBody": {
+        "description": "A JSON object containing the current refresh token.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RefreshToken"
+            }
+          }
+        }
+      },
+      "AccessTokenBody": {
+        "description": "A JSON object containing the new JWT access token.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "Ok": {
+        "description": "Ok"
+      },
+      "BadRequest": {
+        "description": "Bad Request"
+      },
+      "Unauthorized": {
+        "description": "Unauthorized"
+      },
+      "Forbidden": {
+        "description": "Access not granted (The user is blocked or doesn't have enough grants to access the API)"
+      },
+      "NotFound": {
+        "description": "The specified resource was not found"
+      }
+    },
+    "schemas": {
+      "Credentials": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Username."
+          },
+          "password": {
+            "type": "string",
+            "description": "Password."
+          },
+          "application_id": {
+            "type": "string",
+            "description": "App unique id."
+          },
+          "os": {
+            "type": "string",
+            "enum": [
+              "ANDROID",
+              "iOS"
+            ],
+            "description": "Mobile OS type:\n * `ANDROID` - Android\n * `iOS` - iOS\n"
+          }
+        },
+        "required": [
+          "username",
+          "password",
+          "application_id",
+          "os"
+        ]
+      },
+      "RefreshToken": {
+        "type": "object",
+        "properties": {
+          "refresh_token": {
+            "type": "string",
+            "description": "Refresh token."
+          }
+        },
+        "required": [
+          "refresh_token"
+        ]
+      },
+      "AccessToken": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "Access token."
+          }
+        },
+        "required": [
+          "access_token"
+        ]
+      },
+      "Tokens": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "JWT."
+          },
+          "refresh_token": {
+            "type": "string",
+            "description": "Refresh token."
+          }
+        }
+      },
+      "UserProfile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "User id."
+          },
+          "customer_id": {
+            "type": "integer",
+            "description": "Customer id."
+          },
+          "username": {
+            "type": "string",
+            "description": "Username."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name."
+          },
+          "surname": {
+            "type": "string",
+            "description": "Surname."
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email."
+          },
+          "grants": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "customer_id",
+          "username",
+          "name",
+          "surname",
+          "email",
+          "grants"
+        ]
+      }
+    }
+  }
+}
