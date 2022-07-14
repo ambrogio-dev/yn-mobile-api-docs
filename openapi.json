@@ -20,7 +20,11 @@
     },
     {
       "name": "User",
-      "description": "Authenticaed user API"
+      "description": "Authenticated user API"
+    },
+    {
+      "name": "Timecard",
+      "description": "Timecard API"
     }
   ],
   "paths": {
@@ -154,6 +158,165 @@
           }
         }
       }
+    },
+    "/timecard/settings": {
+      "get": {
+        "tags": [
+          "Timecard"
+        ],
+        "summary": "Timecard settings",
+        "description": "Settings",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Settings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimecardSettings"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/timecard/entries": {
+      "post": {
+        "tags": [
+          "Timecard"
+        ],
+        "summary": "Record a new working time",
+        "description": "Record a new working time",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/TimecardRecordNew"
+        },
+        "responses": {
+          "200": {
+            "description": "Time registration success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeCardRecordId"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/timecard/entries/{id}": {
+      "get": {
+        "tags": [
+          "Timecard"
+        ],
+        "summary": "Represents a working time record",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Working time record id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Working time record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeCardRecord"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Timecard"
+        ],
+        "summary": "Updates a previously recorded working time.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/TimcardUpdate"
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Working time record id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Ok"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -183,6 +346,28 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/AccessToken"
+            }
+          }
+        }
+      },
+      "TimecardRecordNew": {
+        "description": "A JSON object describing a new working time record.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TimecardRecordNew"
+            }
+          }
+        }
+      },
+      "TimcardUpdate": {
+        "description": "TODO",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TimeCardRecordUpdate"
             }
           }
         }
@@ -317,6 +502,200 @@
           "surname",
           "email",
           "grants"
+        ]
+      },
+      "TimecardSettings": {
+        "type": "object",
+        "properties": {
+          "justifications": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": [
+                    "in",
+                    "out",
+                    "both"
+                  ],
+                  "description": "Direction for which justification is available : * `in` - The justification is available only for a entry. * `out` - The justification is available only for an exit. * `both` - The justification is available only for both entry and exit.\n"
+                },
+                "localization": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "example": {
+                    "en": "justification name",
+                    "ita": "nome del giustificativo"
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "direction",
+                "localization"
+              ]
+            },
+            "description": "Justifications."
+          }
+        },
+        "required": [
+          "justifications"
+        ]
+      },
+      "TimecardRecordNew": {
+        "type": "object",
+        "properties": {
+          "is_in": {
+            "type": "boolean",
+            "description": "Whether or not the time entry represent an entrance."
+          },
+          "justification_id": {
+            "type": "integer",
+            "description": "The time entry justification kind (if any)."
+          },
+          "notes": {
+            "type": "string",
+            "example": "notes"
+          }
+        },
+        "required": [
+          "is_in"
+        ],
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/Realtime"
+          },
+          {
+            "$ref": "#/components/schemas/ManualInserted"
+          }
+        ]
+      },
+      "Realtime": {
+        "type": "object",
+        "description": "TODO",
+        "properties": {
+          "geolocation": {
+            "$ref": "#/components/schemas/Geolocation"
+          }
+        }
+      },
+      "ManualInserted": {
+        "type": "object",
+        "description": "TODO",
+        "properties": {
+          "date": {
+            "type": "string",
+            "example": 1655460944344
+          }
+        },
+        "required": [
+          "date"
+        ]
+      },
+      "Geolocation": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "integer",
+            "minimum": -90,
+            "maximum": 90
+          },
+          "longitude": {
+            "type": "integer",
+            "minimum": -180,
+            "maximum": 180
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ]
+      },
+      "TimeCardRecordId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Newly registered time id."
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "TimeCardRecord": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Record id."
+          },
+          "is_in": {
+            "type": "integer",
+            "description": "Whether or not the tracked time is an entry or not."
+          },
+          "is_validated": {
+            "type": "integer",
+            "description": "Whether or not the tracked time had been validated."
+          },
+          "is_confirmed": {
+            "type": "integer",
+            "description": "Whether or not the tracked time had been confirmed."
+          },
+          "date": {
+            "type": "string",
+            "description": "Tracked date."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes."
+          },
+          "justification_id": {
+            "type": "integer",
+            "description": "Justification id (if any)."
+          },
+          "geolocation": {
+            "$ref": "#/components/schemas/Geolocation"
+          }
+        },
+        "required": [
+          "id",
+          "is_in",
+          "is_validated",
+          "is_confirmed",
+          "date"
+        ]
+      },
+      "TimeCardRecordUpdate": {
+        "type": "object",
+        "properties": {
+          "is_in": {
+            "type": "integer",
+            "description": "Whether or not the tracked time is an entry or not."
+          },
+          "date": {
+            "type": "string",
+            "description": "Tracked date."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes."
+          },
+          "justification_id": {
+            "type": "integer",
+            "description": "Justification id (if any)."
+          }
+        },
+        "required": [
+          "id",
+          "is_in",
+          "date"
         ]
       }
     }
