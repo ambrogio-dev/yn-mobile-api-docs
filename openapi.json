@@ -24,13 +24,13 @@
     }
   ],
   "paths": {
-    "/auth/login": {
+    "/auth/Login": {
       "post": {
         "tags": [
           "Authentication"
         ],
         "summary": "Login",
-        "description": "TODO",
+        "description": "Logs in a user.",
         "requestBody": {
           "description": "Credentials",
           "content": {
@@ -52,13 +52,109 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
           }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout",
+        "description": "Logs out the current authenticated user.",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RefreshTokenBody"
         },
-        "x-codegen-request-body-name": "body"
+        "responses": {
+          "200": {
+            "description": "User logged out."
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Refresh",
+        "description": "Refresh the API access token.",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RefreshTokenBody"
+        },
+        "responses": {
+          "200": {
+            "description": "Tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessToken"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
       }
     }
   },
   "components": {
+    "requestBodies": {
+      "RefreshTokenBody": {
+        "description": "A JSON object containing the current refresh token.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RefreshToken"
+            }
+          }
+        }
+      },
+      "AccessTokenBody": {
+        "description": "A JSON object containing the new JWT access token.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "Ok": {
+        "description": "Ok"
+      },
+      "BadRequest": {
+        "description": "Bad Request"
+      },
+      "Unauthorized": {
+        "description": "Unauthorized"
+      },
+      "NotFound": {
+        "description": "The specified resource was not found"
+      }
+    },
     "schemas": {
       "Credentials": {
         "type": "object",
@@ -85,6 +181,30 @@
           "password",
           "application_id",
           "os"
+        ]
+      },
+      "RefreshToken": {
+        "type": "object",
+        "properties": {
+          "refresh_token": {
+            "type": "string",
+            "description": "Refresh token."
+          }
+        },
+        "required": [
+          "refresh_token"
+        ]
+      },
+      "AccessToken": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "Access token."
+          }
+        },
+        "required": [
+          "access_token"
         ]
       },
       "Tokens": {

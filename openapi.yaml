@@ -20,7 +20,7 @@ paths:
       tags:
       - Authentication
       summary: Login
-      description: TODO
+      description: Logs in a user.
       requestBody:
         description: Credentials
         content:
@@ -35,24 +35,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Tokens'
-      x-codegen-request-body-name: body
+        400:
+          $ref: '#/components/responses/BadRequest' 
+        401:
+          $ref: '#/components/responses/Unauthorized' 
   /auth/logout:
     post:
       tags:
       - Authentication
       summary: Logout
-      description: TODO
+      description: Logs out the current authenticated user.
       requestBody:
         $ref: '#/components/requestBodies/RefreshTokenBody'
       responses:
         200:
-          description: User logged out.      
+          description: User logged out.
+        400:
+          $ref: '#/components/responses/BadRequest' 
+        401:
+          $ref: '#/components/responses/Unauthorized'          
   /auth/refresh:
     post:
       tags:
       - Authentication
       summary: Refresh
-      description: TODO
+      description: Refresh the API access token.
       requestBody:
         $ref: '#/components/requestBodies/RefreshTokenBody'
       responses:
@@ -61,8 +68,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tokens'
-      x-codegen-request-body-name: body
+                $ref: '#/components/schemas/AccessToken'
+        400:
+          $ref: '#/components/responses/BadRequest' 
+        401:
+          $ref: '#/components/responses/Unauthorized'     
       
 #https://swagger.io/docs/specification/components/
 #https://swagger.io/docs/specification/authentication/bearer-authentication/
@@ -74,8 +84,25 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/RefreshToken'            
-            
+            $ref: '#/components/schemas/RefreshToken'
+    AccessTokenBody:
+      description: A JSON object containing the new JWT access token.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccessToken'              
+
+  responses:
+    Ok: #200 
+      description: Ok
+    BadRequest: #400
+      description: Bad Request
+    Unauthorized: #401
+      description: Unauthorized  
+    NotFound: #404
+      description: The specified resource was not found
+      
   schemas:
     Credentials:
       type: object
