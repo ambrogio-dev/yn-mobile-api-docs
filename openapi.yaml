@@ -49,7 +49,12 @@ paths:
       summary: Logout
       description: Logs out the current authenticated user.
       requestBody:
-        $ref: '#/components/requestBodies/RefreshTokenBody'
+        description: A JSON object containing the current refresh token.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshToken'
       responses:
         200:
           description: User logged out.
@@ -66,10 +71,15 @@ paths:
       security:
         - bearerAuth: [] 
       requestBody:
-        $ref: '#/components/requestBodies/RefreshTokenBody'
+        description: A JSON object containing the current refresh token.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshToken'
       responses:
         200:
-          description: Tokens
+          description: Refreshed access token.
           content:
             application/json:
               schema:
@@ -131,7 +141,12 @@ paths:
       security:
         - bearerAuth: [] 
       requestBody:
-        $ref: '#/components/requestBodies/TimecardRecordNew'
+        description: A JSON object describing a new working time record.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimecardNewRecord'   
       responses:
         200:
           description: Time registration success
@@ -145,6 +160,77 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         403:
           $ref: '#/components/responses/Forbidden'
+    get:
+      tags:
+      - Timecard
+      summary: Get all the working time entries for an authenticated user.
+      description: Get all the working time entries for an authenticated user.
+      security:
+        - bearerAuth: [] 
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of records to return.
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: offset
+          in: query
+          description: Pagination offset.
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: from
+          in: query
+          description: Lower date bound
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: to
+          in: query
+          description: Upper date bound
+          required: false
+          schema:
+            type: integer
+            format: int64                
+      responses:
+        200:
+          description: Time registration success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:            
+                  $ref: '#/components/schemas/TimeCardRecord'
+        400:
+          $ref: '#/components/responses/BadRequest' 
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'          
+  /timecard/entries/last:          
+     get:
+      tags:
+      - Timecard
+      summary: Represents the last working time record inserted
+      security:
+        - bearerAuth: [] 
+      responses:
+        200:
+          description: Working time record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeCardRecord'
+        400:
+          $ref: '#/components/responses/BadRequest' 
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'          
   /timecard/entries/{id}:          
      get:
       tags:
@@ -180,7 +266,12 @@ paths:
       security:
         - bearerAuth: [] 
       requestBody:
-        $ref: '#/components/requestBodies/TimcardUpdate'
+        description: A JSON object describing an updated working time record.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeCardUpdatedRecord'  
       parameters:
         - name: id
           in: path
@@ -206,40 +297,6 @@ components:
       scheme: bearer
       bearerFormat: JWT
       
-  requestBodies:
-    RefreshTokenBody:
-      description: A JSON object containing the current refresh token.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RefreshToken'
-    AccessTokenBody:
-      description: A JSON object containing the new JWT access token.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AccessToken' 
-            
-            
-    TimecardRecordNew:
-      description: A JSON object describing a new working time record.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/TimecardRecordNew'   
-            
-    TimcardUpdate:
-      description: TODO
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/TimeCardRecordUpdate'  
-
-
   responses:
     Ok: #200 
       description: Ok
@@ -255,6 +312,7 @@ components:
   schemas:
     Credentials:
       type: object
+      description: Authentication credentials.
       properties:
         username:
           type: string
@@ -280,6 +338,7 @@ components:
      
     RefreshToken:
       type: object
+      description: Refresh token.
       properties:
         refresh_token:
           type: string
@@ -292,7 +351,8 @@ components:
       properties:
         access_token:
           type: string
-          description: Access token.
+          format: jwt
+          description: Access token (JWT).
       required:
         - access_token    
         
@@ -301,7 +361,8 @@ components:
       properties:
         access_token:
           type: string
-          description: JWT.
+          format: jwt
+          description: Access token (JWT).
         refresh_token:
           type: string
           description: Refresh token.
@@ -374,7 +435,7 @@ components:
       required:
         - justifications
 
-    TimecardRecordNew:
+    TimecardNewRecord:
       type: object
       properties:
         is_in:
@@ -389,26 +450,24 @@ components:
       required:
         - is_in
       oneOf:
-        - $ref: '#/components/schemas/Realtime' 
-        - $ref: '#/components/schemas/ManualInserted' 
-        
-    Realtime:
-      type: object
-      description: TODO
-      properties:
-        geolocation:
-         $ref: '#/components/schemas/Geolocation'  
-         
-    ManualInserted:
-      type: object
-      description: TODO
-      properties:
-        date:
-          type: string
-          example: 1655460944344
-      required:
-        - date 
-        
+        - properties:
+            realtime_inserted:
+              type: object
+              description: Recorded in realtime.
+              properties:
+                geolocation:
+                  $ref: '#/components/schemas/Geolocation'
+        - properties:
+            manually_inserted:
+              type: object
+              description: Added later in time.
+              properties:
+                date:
+                  type: integer
+                  example: 1655460944344
+              required:
+                - date 
+          
     Geolocation:
       type: object
       properties:
@@ -466,7 +525,7 @@ components:
         - is_confirmed
         - date
 
-    TimeCardRecordUpdate:
+    TimeCardUpdatedRecord:
       type: object
       properties:
         is_in:
