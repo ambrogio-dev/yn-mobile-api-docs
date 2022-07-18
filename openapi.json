@@ -239,7 +239,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TimeCardRecordId"
+                  "$ref": "#/components/schemas/TimeCardNewRecordId"
                 }
               }
             }
@@ -721,7 +721,7 @@
           "longitude"
         ]
       },
-      "TimeCardRecordId": {
+      "TimeCardNewRecordId": {
         "type": "object",
         "properties": {
           "id": {
