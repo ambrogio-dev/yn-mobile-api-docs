@@ -18,7 +18,7 @@ tags:
 
 paths:
 # Authentication
-  /auth/Login:
+  /auth/login:
     post:
       tags:
       - Authentication
@@ -67,7 +67,7 @@ paths:
       tags:
       - Authentication
       summary: Refresh
-      description: Refresh the API access token.
+      description: Refreshs the API access token.
       security:
         - bearerAuth: [] 
       requestBody:
@@ -88,6 +88,67 @@ paths:
           $ref: '#/components/responses/BadRequest' 
         401:
           $ref: '#/components/responses/Unauthorized'
+  /auth/password-recovery:
+    post:
+      tags:
+      - Authentication
+      summary: Password recovery
+      description: Sends a password recovery email with a temporary password. This method will set `is_password_expired` to **true** in the `/users/me API` until the password is changed with a new one.
+      requestBody:
+        description: Credentials
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Username or email.
+              properties:
+                username_email:
+                  type: string
+                  description: Username or email.
+              required:
+                - username_email
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/Ok' 
+        400:
+          $ref: '#/components/responses/BadRequest'
+        403:
+          description: No user is associated with this username or email.
+  /auth/password-change:
+    post:
+      tags:
+      - Authentication
+      summary: Password change
+      description: Changes the current password with a new one.
+      security:
+        - bearerAuth: []       
+      requestBody:
+        description: Credentials
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                current_password:
+                  type: string
+                  description: The current password.
+                new_password:
+                  type: string
+                  description: The new password
+              required:
+                - current_password
+                - new_password
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/Ok' 
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'  
+        403:
+          $ref: '#/components/responses/Forbidden'          
 # User          
   /user/me:
     get:
@@ -389,6 +450,9 @@ components:
           type: string
           format: email
           description: Email.
+        is_password_expired:
+          type: boolean
+          description: Wheter or not the current password is expired and needs to be changed.
         grants:
           type: array
           items:
