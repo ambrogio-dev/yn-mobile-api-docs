@@ -685,7 +685,7 @@
           },
           "is_password_expired": {
             "type": "boolean",
-            "description": "Wheter or not the current password is expired and needs to be changed."
+            "description": "Whether or not the current password is expired and needs to be changed."
           },
           "grants": {
             "type": "array",
@@ -699,7 +699,6 @@
           "customer_id",
           "username",
           "name",
-          "surname",
           "email",
           "grants"
         ]
