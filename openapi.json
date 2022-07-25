@@ -518,7 +518,7 @@
           }
         ],
         "requestBody": {
-          "description": "A JSON object describing an updated working time record.",
+          "description": "A JSON object describing an updated working time record. <br> **At least one field must be not optional.**",
           "required": true,
           "content": {
             "application/json": {
@@ -892,12 +892,7 @@
             "type": "integer",
             "description": "Justification id (if any)."
           }
-        },
-        "required": [
-          "id",
-          "is_in",
-          "date"
-        ]
+        }
       }
     }
   }

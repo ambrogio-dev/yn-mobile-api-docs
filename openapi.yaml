@@ -327,7 +327,7 @@ paths:
       security:
         - bearerAuth: [] 
       requestBody:
-        description: A JSON object describing an updated working time record.
+        description: A JSON object describing an updated working time record. <br> **At least one field must be not optional.**
         required: true
         content:
           application/json:
@@ -593,7 +593,7 @@ components:
       properties:
         is_in:
           type: integer
-          description: Whether or not the tracked time is an entry or not.          
+          description: Whether or not the tracked time is an entry or not.
         date:
           type: string
           description: Tracked date.
@@ -603,8 +603,4 @@ components:
         justification_id:
           type: integer
           description: Justification id (if any).
-      required:
-        - id  
-        - is_in
-        - date        
       
