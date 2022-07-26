@@ -7,6 +7,7 @@ info:
   version: 1.0.0
 servers:
 - url: https://alpha.web.youneed.it/mobile/api/v2
+  description: Alpha API server.
 
 tags:
 - name: Authentication
@@ -15,7 +16,8 @@ tags:
   description: Authenticated user API
 - name: Timecard
   description: Timecard API
-
+- name: Files (🚧 Not implemented yet 🚧)
+  description: File API
 paths:
 # Authentication
   /auth/login:
@@ -363,7 +365,53 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         403:
           $ref: '#/components/responses/Forbidden' 
-          
+# Files
+  /avatar/users/{avatar_name}:          
+     get:
+      servers:
+        - url: https://files.example.com #TODO update the URL
+          description: Alpha file server.
+      tags:
+      - Files
+      summary: User avatar
+      security:
+        - bearerAuth: [] 
+      parameters:
+        - name: avatar_name
+          in: path
+          description: Avatar name
+          required: true
+          schema:
+            type: string
+        - name: size
+          in: query
+          description: Avatar size
+          required: true
+          schema:
+            type: string
+            enum: [sm, md, lg]
+            description: |
+              Image sizes:
+              * `sm` - small 50x50
+              * `md` - medium 200x200
+              * `lg` - large 600x600
+              sm: 50x50
+      responses:
+        200:
+          description: Avatar image.
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        400:
+          $ref: '#/components/responses/BadRequest' 
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden' 
+        404:
+          $ref: '#/components/responses/NotFound'           
 components:
   securitySchemes:
     bearerAuth:   
@@ -400,7 +448,7 @@ components:
         os:
           type: string
           enum: [ANDROID, iOS]
-          description: >
+          description: |
             Mobile OS type:
              * `ANDROID` - Android
              * `iOS` - iOS
@@ -492,7 +540,7 @@ components:
               direction:
                 type: string
                 enum: [in, out, both]
-                description: >
+                description: |
                   Direction for which this justification is available to be passed during a workinng time record:
                   * `in` - The justification is available only for a entry.
                   * `out` - The justification is available only for an exit.

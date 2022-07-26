@@ -10,7 +10,8 @@
   },
   "servers": [
     {
-      "url": "https://alpha.web.youneed.it/mobile/api/v2"
+      "url": "https://alpha.web.youneed.it/mobile/api/v2",
+      "description": "Alpha API server."
     }
   ],
   "tags": [
@@ -25,6 +26,10 @@
     {
       "name": "Timecard",
       "description": "Timecard API"
+    },
+    {
+      "name": "Files (🚧 Not implemented yet 🚧)",
+      "description": "File API"
     }
   ],
   "paths": {
@@ -555,6 +560,76 @@
           }
         }
       }
+    },
+    "/avatar/users/{avatar_name}": {
+      "get": {
+        "servers": [
+          {
+            "url": "https://files.example.com",
+            "description": "Alpha file server."
+          }
+        ],
+        "tags": [
+          "Files"
+        ],
+        "summary": "User avatar",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "avatar_name",
+            "in": "path",
+            "description": "Avatar name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Avatar size",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "sm",
+                "md",
+                "lg"
+              ],
+              "description": "Image sizes:\n* `sm` - small 50x50\n* `md` - medium 200x200\n* `lg` - large 600x600\nsm: 50x50\n"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Avatar image.",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -722,7 +797,7 @@
                     "out",
                     "both"
                   ],
-                  "description": "Direction for which this justification is available to be passed during a workinng time record: * `in` - The justification is available only for a entry. * `out` - The justification is available only for an exit. * `both` - The justification is available only for both entry and exit.\n"
+                  "description": "Direction for which this justification is available to be passed during a workinng time record:\n* `in` - The justification is available only for a entry.\n* `out` - The justification is available only for an exit.\n* `both` - The justification is available only for both entry and exit.\n"
                 },
                 "localization": {
                   "description": "Justifications are customizabile, it's up to a customer to provide localicazions.",
