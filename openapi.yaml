@@ -23,7 +23,10 @@ paths:
       tags:
       - Authentication
       summary: Login
-      description: Logs in a user.
+      description: |
+        Logs in a user.  
+        The returned **access token** must be passed as Bearer token to access protected APIs until it expires.  
+        Once the **access token** is expired, it must be refreshed using the **refresh token**.
       requestBody:
         description: Credentials
         content:
@@ -47,7 +50,7 @@ paths:
       tags:
       - Authentication
       summary: Logout
-      description: Logs out the current authenticated user.
+      description: Logs out the current authenticated user and invalidates its tokens.
       requestBody:
         description: A JSON object containing the current refresh token.
         required: true
@@ -67,7 +70,9 @@ paths:
       tags:
       - Authentication
       summary: Refresh
-      description: Refreshs the API access token.
+      description: |
+        Refreshes the API access token.  
+        If the refresh fails with a **401** error code, the user must login again.
       security:
         - bearerAuth: [] 
       requestBody:
@@ -93,7 +98,9 @@ paths:
       tags:
       - Authentication
       summary: Password recovery
-      description: Sends a password recovery email with a temporary password. This method will set `is_password_expired` to **true** in the `/users/me API` until the password is changed with a new one.
+      description: |
+        Sends a password recovery email with a temporary password.  
+        This method will set `is_password_expired` to **true** in the `/users/me API` until the password is changed with a new one.
       requestBody:
         description: Credentials
         content:
@@ -154,8 +161,12 @@ paths:
     get:
       tags:
       - User
-      summary: Me
-      description: User profile
+      summary: User profile
+      description: |
+        This API provides authenticated user details.  
+        Notes:
+          - **grants** can be used to preemtly know with features can be accessed.
+          - **is_password_expired** warns if the current password must be updated (i.e. the current password is expired or is temporary)
       security:
         - bearerAuth: [] 
       responses:
@@ -327,7 +338,9 @@ paths:
       security:
         - bearerAuth: [] 
       requestBody:
-        description: A JSON object describing an updated working time record. <br> **At least one field must be not optional.**
+        description: |
+          A JSON object describing an updated working time record.  
+          **At least one field must be not optional.**
         required: true
         content:
           application/json:
@@ -466,6 +479,7 @@ components:
         - grants
         
     TimecardSettings:
+      description: JSON containing all the settings needed by the puncher.
       type: object
       properties:
         justifications:
@@ -479,11 +493,12 @@ components:
                 type: string
                 enum: [in, out, both]
                 description: >
-                  Direction for which justification is available :
+                  Direction for which this justification is available to be passed during a workinng time record:
                   * `in` - The justification is available only for a entry.
                   * `out` - The justification is available only for an exit.
                   * `both` - The justification is available only for both entry and exit.
               localization:
+                description: Justifications are customizabile, it's up to a customer to provide localicazions.
                 type: object
                 additionalProperties:
                   type: string

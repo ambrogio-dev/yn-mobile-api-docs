@@ -34,7 +34,7 @@
           "Authentication"
         ],
         "summary": "Login",
-        "description": "Logs in a user.",
+        "description": "Logs in a user.  \nThe returned **access token** must be passed as Bearer token to access protected APIs until it expires.  \nOnce the **access token** is expired, it must be refreshed using the **refresh token**.\n",
         "requestBody": {
           "description": "Credentials",
           "content": {
@@ -72,7 +72,7 @@
           "Authentication"
         ],
         "summary": "Logout",
-        "description": "Logs out the current authenticated user.",
+        "description": "Logs out the current authenticated user and invalidates its tokens.",
         "requestBody": {
           "description": "A JSON object containing the current refresh token.",
           "required": true,
@@ -103,7 +103,7 @@
           "Authentication"
         ],
         "summary": "Refresh",
-        "description": "Refreshs the API access token.",
+        "description": "Refreshes the API access token.  \nIf the refresh fails with a **401** error code, the user must login again.\n",
         "security": [
           {
             "bearerAuth": []
@@ -146,7 +146,7 @@
           "Authentication"
         ],
         "summary": "Password recovery",
-        "description": "Sends a password recovery email with a temporary password. This method will set `is_password_expired` to **true** in the `/users/me API` until the password is changed with a new one.",
+        "description": "Sends a password recovery email with a temporary password.  \nThis method will set `is_password_expired` to **true** in the `/users/me API` until the password is changed with a new one.\n",
         "requestBody": {
           "description": "Credentials",
           "content": {
@@ -239,8 +239,8 @@
         "tags": [
           "User"
         ],
-        "summary": "Me",
-        "description": "User profile",
+        "summary": "User profile",
+        "description": "This API provides authenticated user details.  \nNotes:\n  - **grants** can be used to preemtly know with features can be accessed.\n  - **is_password_expired** warns if the current password must be updated (i.e. the current password is expired or is temporary)\n",
         "security": [
           {
             "bearerAuth": []
@@ -518,7 +518,7 @@
           }
         ],
         "requestBody": {
-          "description": "A JSON object describing an updated working time record. <br> **At least one field must be not optional.**",
+          "description": "A JSON object describing an updated working time record.  \n**At least one field must be not optional.**\n",
           "required": true,
           "content": {
             "application/json": {
@@ -704,6 +704,7 @@
         ]
       },
       "TimecardSettings": {
+        "description": "JSON containing all the settings needed by the puncher.",
         "type": "object",
         "properties": {
           "justifications": {
@@ -721,9 +722,10 @@
                     "out",
                     "both"
                   ],
-                  "description": "Direction for which justification is available : * `in` - The justification is available only for a entry. * `out` - The justification is available only for an exit. * `both` - The justification is available only for both entry and exit.\n"
+                  "description": "Direction for which this justification is available to be passed during a workinng time record: * `in` - The justification is available only for a entry. * `out` - The justification is available only for an exit. * `both` - The justification is available only for both entry and exit.\n"
                 },
                 "localization": {
+                  "description": "Justifications are customizabile, it's up to a customer to provide localicazions.",
                   "type": "object",
                   "additionalProperties": {
                     "type": "string"
